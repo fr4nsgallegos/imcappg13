@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imcappg13/widgets/slider_widget.dart';
 
 class ImcPage extends StatefulWidget {
   @override
@@ -8,27 +9,8 @@ class ImcPage extends StatefulWidget {
 class _ImcPageState extends State<ImcPage> {
   // double sliderValue = 1;
 
-  double sliderHeigth = 0;
-  double sliderweight = 0;
-
-  Widget sliderWidget() {
-    return Column(
-      children: [
-        Text("Altura:", style: TextStyle(fontSize: 15)),
-        Text(
-          "170.0 cm",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
-        ),
-        Slider(
-          value: sliderHeigth,
-          onChanged: (value) {
-            sliderHeigth = value;
-            setState(() {});
-          },
-        ),
-      ],
-    );
-  }
+  double sliderHeigth = 40;
+  double sliderweight = 60;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +24,18 @@ class _ImcPageState extends State<ImcPage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [sliderWidget(), sliderWidget()],
+          children: [
+            SliderWidget(
+              title: "Altura",
+              unidadMedida: "cm",
+              value: sliderHeigth,
+            ),
+            SliderWidget(
+              title: "Peso",
+              unidadMedida: "Kg",
+              value: sliderweight,
+            ),
+          ],
         ),
       ),
     );
