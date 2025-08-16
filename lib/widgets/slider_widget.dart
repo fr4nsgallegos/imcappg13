@@ -4,11 +4,13 @@ class SliderWidget extends StatefulWidget {
   double value;
   String title;
   String unidadMedida;
+  ValueChanged<double> onChanged;
 
   SliderWidget({
     required this.value,
     required this.title,
     required this.unidadMedida,
+    required this.onChanged,
   });
 
   @override
@@ -16,10 +18,6 @@ class SliderWidget extends StatefulWidget {
 }
 
 class _SliderWidgetState extends State<SliderWidget> {
-  double roundedDecimal(double number) {
-    return double.parse(number.toStringAsFixed(2));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,10 +31,7 @@ class _SliderWidgetState extends State<SliderWidget> {
           min: 40,
           max: 280,
           value: widget.value,
-          onChanged: (value) {
-            widget.value = roundedDecimal(value);
-            setState(() {});
-          },
+          onChanged: widget.onChanged,
         ),
       ],
     );

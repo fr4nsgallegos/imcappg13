@@ -12,10 +12,30 @@ class _ImcPageState extends State<ImcPage> {
   double sliderHeigth = 40;
   double sliderweight = 60;
   double imcResult = 0;
+  String imcResultValue = "";
 
   double calcularIMC() {
-    imcResult = sliderweight / ((sliderHeigth * sliderHeigth));
+    imcResult = roundedDecimal(
+      sliderweight / ((sliderHeigth / 100 * sliderHeigth / 100)),
+    );
     return imcResult;
+  }
+
+  double roundedDecimal(double number) {
+    return double.parse(number.toStringAsFixed(2));
+  }
+
+  void imcResultSelected() {
+    if (imcResult > 0 && imcResult < 18.5) {
+      imcResultValue = "Delgadez";
+    } else if (imcResult >= 18.5 && imcResult < 24.9) {
+      imcResultValue = "Normal";
+    } else if (imcResult >= 25.0 && imcResult < 29.9) {
+      imcResultValue = "Sobrepeso";
+    } else {
+      imcResultValue = "Obesidad";
+    }
+    setState(() {});
   }
 
   @override
@@ -37,11 +57,19 @@ class _ImcPageState extends State<ImcPage> {
               title: "Altura",
               unidadMedida: "cm",
               value: sliderHeigth,
+              onChanged: (nuevoValor) {
+                sliderHeigth = roundedDecimal(nuevoValor);
+                setState(() {});
+              },
             ),
             SliderWidget(
               title: "Peso",
               unidadMedida: "Kg",
               value: sliderweight,
+              onChanged: (nuevoValor) {
+                sliderweight = roundedDecimal(nuevoValor);
+                setState(() {});
+              },
             ),
 
             Padding(
@@ -56,6 +84,7 @@ class _ImcPageState extends State<ImcPage> {
                   ),
                   onPressed: () {
                     calcularIMC();
+                    imcResultSelected();
                     setState(() {});
                   },
                   child: Text("Calcular"),
@@ -67,6 +96,7 @@ class _ImcPageState extends State<ImcPage> {
               imcResult.toString(),
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
             ),
+            Text(imcResultValue, style: TextStyle(fontSize: 20)),
           ],
         ),
       ),
