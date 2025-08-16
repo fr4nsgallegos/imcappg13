@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imcappg13/main.dart';
 
 class SliderWidget extends StatefulWidget {
   double value;
@@ -22,10 +23,10 @@ class _SliderWidgetState extends State<SliderWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("${widget.title}:", style: TextStyle(fontSize: 15)),
+        Text("${widget.title}:", style: Theme.of(context).textTheme.bodyMedium),
         Text(
           "${widget.value} ${widget.unidadMedida}",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
         Slider(
           min: 40,
