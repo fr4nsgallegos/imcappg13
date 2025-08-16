@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:imcappg13/models/imc_model.dart';
 import 'package:imcappg13/widgets/slider_widget.dart';
 
 class ImcPage extends StatefulWidget {
@@ -12,7 +14,7 @@ class _ImcPageState extends State<ImcPage> {
   double sliderHeigth = 40;
   double sliderweight = 60;
   double imcResult = 0;
-  String imcResultValue = "";
+  ImcModel? selectedImcModel;
 
   double calcularIMC() {
     imcResult = roundedDecimal(
@@ -27,13 +29,13 @@ class _ImcPageState extends State<ImcPage> {
 
   void imcResultSelected() {
     if (imcResult > 0 && imcResult < 18.5) {
-      imcResultValue = "Delgadez";
+      selectedImcModel = imcModelList[0];
     } else if (imcResult >= 18.5 && imcResult < 24.9) {
-      imcResultValue = "Normal";
+      selectedImcModel = imcModelList[1];
     } else if (imcResult >= 25.0 && imcResult < 29.9) {
-      imcResultValue = "Sobrepeso";
+      selectedImcModel = imcModelList[2];
     } else {
-      imcResultValue = "Obesidad";
+      selectedImcModel = imcModelList[3];
     }
     setState(() {});
   }
@@ -96,7 +98,17 @@ class _ImcPageState extends State<ImcPage> {
               imcResult.toString(),
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
             ),
-            Text(imcResultValue, style: TextStyle(fontSize: 20)),
+            Text(
+              selectedImcModel?.title ?? "-",
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(height: 32),
+            selectedImcModel == null
+                ? Text("Realiza el cálculo para ver el resultado")
+                : SvgPicture.asset(
+                    "assets/images/${selectedImcModel!.pathImage}.svg",
+                    width: 250,
+                  ),
           ],
         ),
       ),
