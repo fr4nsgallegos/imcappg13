@@ -11,6 +11,12 @@ class _ImcPageState extends State<ImcPage> {
 
   double sliderHeigth = 40;
   double sliderweight = 60;
+  double imcResult = 0;
+
+  double calcularIMC() {
+    imcResult = sliderweight / ((sliderHeigth * sliderHeigth));
+    return imcResult;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +27,11 @@ class _ImcPageState extends State<ImcPage> {
         backgroundColor: Color(0xff4157B2),
         centerTitle: true,
       ),
-      body: Center(
+      body: Padding(
+        padding: EdgeInsetsGeometry.all(16),
+
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SliderWidget(
               title: "Altura",
@@ -34,6 +42,30 @@ class _ImcPageState extends State<ImcPage> {
               title: "Peso",
               unidadMedida: "Kg",
               value: sliderweight,
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SizedBox(
+                width: double.infinity,
+                height: 60,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blueAccent,
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: () {
+                    calcularIMC();
+                    setState(() {});
+                  },
+                  child: Text("Calcular"),
+                ),
+              ),
+            ),
+
+            Text(
+              imcResult.toString(),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
             ),
           ],
         ),
