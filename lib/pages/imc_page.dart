@@ -4,6 +4,11 @@ import 'package:imcappg13/models/imc_model.dart';
 import 'package:imcappg13/widgets/slider_widget.dart';
 
 class ImcPage extends StatefulWidget {
+  final ThemeMode themeMode;
+  final ValueChanged<bool> onThemeChanged;
+
+  ImcPage({required this.themeMode, required this.onThemeChanged});
+
   @override
   State<ImcPage> createState() => _ImcPageState();
 }
@@ -42,8 +47,18 @@ class _ImcPageState extends State<ImcPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = widget.themeMode == ThemeMode.dark;
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Row(
+            children: [
+              Icon(Icons.light_mode),
+              Switch(value: isDark, onChanged: widget.onThemeChanged),
+              Icon(Icons.dark_mode),
+            ],
+          ),
+        ],
         foregroundColor: Colors.white,
         title: Text("Calculadora IMC"),
         backgroundColor: Color(0xff4157B2),
